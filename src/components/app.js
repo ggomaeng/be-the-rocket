@@ -148,7 +148,7 @@ export default class App extends Component {
         });
 
         this.uploadScore();
-        this.loadScores();
+        // this.loadScores();
 
         // Replace top score
         if(this.state.currentScore > this.state.topScore){
@@ -227,7 +227,7 @@ export default class App extends Component {
 
     loadScores() {
         var scores = [];
-        var ref = firebase.database().ref('scores/').orderByChild('score').limitToLast(10).once('value', snapshot => {
+        var ref = firebase.database().ref('scores/').orderByChild('score').limitToLast(10).on('value', snapshot => {
             // scores.unshift(snapshot.val());
             snapshot.forEach(child => {
                scores.unshift(child.val());

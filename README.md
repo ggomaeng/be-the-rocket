@@ -7,7 +7,7 @@ Implemented the project by https://github.com/chriz001/Reacteroids.
 
 ## Demo
 
-https://ggomaeng.github.io/be-the-rocket-asteroid/
+https://ggomaeng.github.io/be-the-rocket/
 
 ## Install
 

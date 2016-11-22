@@ -1,0 +1,6 @@
+{
+  "name": "Be-the-rocket",
+  "tagline": "An implementation of the classic Asteroids game using React and Canvas in es6",
+  "body": "# Be-the-Rocket Asteroid\r\nAn implementation of the classic Asteroids game using React and Canvas in es6\r\n\r\nInspired by \"Be the Rocket\" to change the assets and add sharing feature.\r\n\r\nImplemented the project by https://github.com/chriz001/Reacteroids.\r\n\r\n## Demo\r\n\r\nhttps://ggomaeng.github.io/be-the-rocket/\r\n\r\n## Install\r\n\r\nnpm install\r\nnpm start\r\n\r\n## Play\r\n\r\nOpen http://localhost:8080\r\n",
+  "note": "Don't delete this file! It's used internally to help with page regeneration."
+}

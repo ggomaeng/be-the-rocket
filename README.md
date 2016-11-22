@@ -9,7 +9,7 @@ Main foucs is to add more social functionalities and add power-ups.
 
 ## Demo
 
-https://ggomaeng.github.io/be-the-rocket-asteroid/
+https://ggomaeng.github.io/be-the-rocket/
 
 ## Install
 

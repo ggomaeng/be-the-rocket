@@ -57,6 +57,7 @@ export default class App extends Component {
             topScore: localStorage['topscore'] || 0,
             inGame: false,
             gameOver: false,
+            scores: []
         }
         this.rocket = [];
         this.asteroids = [];
@@ -85,6 +86,17 @@ export default class App extends Component {
         });
     }
 
+    componentWillMount() {
+        var config = {
+            apiKey: "AIzaSyDN5gBdf5tKHaWzP7P9iC61OkGNXk7dlK4",
+            authDomain: "be-the-rocket.firebaseapp.com",
+            databaseURL: "https://be-the-rocket.firebaseio.com",
+            storageBucket: "be-the-rocket.appspot.com",
+            messagingSenderId: "911400933743"
+        };
+        firebase.initializeApp(config);
+    }
+
     componentDidMount() {
         window.addEventListener('keyup',   this.handleKeys.bind(this, false));
         window.addEventListener('keydown', this.handleKeys.bind(this, true));
@@ -92,6 +104,7 @@ export default class App extends Component {
 
         const context = this.refs.canvas.getContext('2d');
         this.setState({ context: context });
+        this.loadScores();
         // this.startGame();
         requestAnimationFrame(() => {this.update()});
 
@@ -133,6 +146,9 @@ export default class App extends Component {
             inGame: false,
             gameOver: true,
         });
+
+        this.uploadScore();
+        this.loadScores();
 
         // Replace top score
         if(this.state.currentScore > this.state.topScore){
@@ -209,6 +225,32 @@ export default class App extends Component {
         requestAnimationFrame(() => {this.update()});
     }
 
+    loadScores() {
+        var scores = [];
+        var ref = firebase.database().ref('scores/').orderByChild('score').limitToLast(10).once('value', snapshot => {
+            // scores.unshift(snapshot.val());
+            snapshot.forEach(child => {
+               scores.unshift(child.val());
+            });
+            // this.insertScore(snapshot.val());
+            this.setState({scores});
+        });
+
+    }
+
+
+
+    uploadScore() {
+        if(this.state.currentScore > this.state.scores[9].score) {
+            firebase.database().ref('scores/').push({
+                name: this.state.username,
+                score: this.state.currentScore
+            });
+        } else {
+            console.log('score too low to upload');
+        }
+    }
+
     createObject(item, group){
         this[group].push(item);
     }
@@ -263,12 +305,25 @@ export default class App extends Component {
 
     }
 
+    renderScores() {
+        if(this.state.scores.length == 0){
+            return
+        }
+
+        return this.state.scores.map((player, i) => {
+            if(i < 10){
+                return <p className="score_item" key={i}>{`${i+1}. ${player.name} - ${player.score}`}</p>
+            }
+        })
+
+    }
+
     renderControls() {
         if(this.state.inGame || this.state.gameOver)
         return (
             <div>
                 <span className="score current-score" >Score: {this.state.currentScore}</span>
-                <span className="score top-score" >Top Score: {this.state.topScore}</span>
+                <span className="score top-score" >World Ranking {this.renderScores()}</span>
                 <span className="controls" >
                   Use [A][S][W][D] or [←][↑][↓][→] to MOVE<br/>
                   Use [SPACE] to SHOOT
@@ -289,8 +344,20 @@ export default class App extends Component {
                     <img onClick={() => this.changeColor()} src={'img/' + rocket_color[this.state.rocket_color]}/>
                     <p><FontAwesome name='arrow-up'/></p>
                     <p>Click Me!</p>
+                    <input type="text" onChange={(e) => this.setState({username: e.target.value})} className="form-control" placeholder="Username"/>
+                    <br />
+
+                    <p>{this.state.message}</p>
+
+
                     <button
-                        onClick={ this.startGame.bind(this) }>
+                        onClick={() => {
+                        if(!this.state.username) {
+                            this.setState({message: 'username is required\n'});
+                            return
+                        }
+                        this.startGame()
+                        } }>
                         start
                     </button>
                 </div>
@@ -307,8 +374,7 @@ export default class App extends Component {
                     <FacebookShareButton
                         url={'https://ggomaeng.github.io/be-the-rocket/'}
                         title={'비더로켓 - BE THE ROCKET'}
-                        description={'내 점수는 ' + this.state.currentScore + ' 인데 깰수있겠어?'}
-                    >
+                        description={'내 점수는 ' + this.state.currentScore + ' 인데 깰수있겠어?'}                    >
                         <button>
                             Share <FontAwesome name='facebook' color='blue'/>
                         </button>

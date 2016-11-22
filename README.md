@@ -3,7 +3,9 @@ An implementation of the classic Asteroids game using React and Canvas in es6
 
 Inspired by "Be the Rocket" to change the assets and add sharing feature.
 
-Implemented the project by https://github.com/chriz001/Reacteroids.
+Improved the project by https://github.com/chriz001/Reacteroids.
+
+Main foucs is to add more social functionalities and add power-ups.
 
 ## Demo
 

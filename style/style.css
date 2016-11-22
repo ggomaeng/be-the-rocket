@@ -81,6 +81,7 @@ button:hover{
     right: 20px;
     font-family: 'PT Mono', serif;
     color: #ffffff;
+    text-align: right;
 }
 .score {
     display: block;

@@ -88,11 +88,7 @@ export default class App extends Component {
 
     componentWillMount() {
         var config = {
-            apiKey: "AIzaSyDN5gBdf5tKHaWzP7P9iC61OkGNXk7dlK4",
-            authDomain: "be-the-rocket.firebaseapp.com",
-            databaseURL: "https://be-the-rocket.firebaseio.com",
-            storageBucket: "be-the-rocket.appspot.com",
-            messagingSenderId: "911400933743"
+            //your key goes here
         };
         firebase.initializeApp(config);
     }

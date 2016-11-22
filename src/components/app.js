@@ -305,7 +305,7 @@ export default class App extends Component {
                     <p>Click Me!</p>
 
                     <FacebookShareButton
-                        url={'https://ggomaeng.github.io/be-the-rocket-asteroid/'}
+                        url={'https://ggomaeng.github.io/be-the-rocket/'}
                         title={'비더로켓 - BE THE ROCKET'}
                         description={'내 점수는 ' + this.state.currentScore + ' 인데 깰수있겠어?'}
                     >
